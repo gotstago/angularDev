@@ -25,7 +25,7 @@ atom:
   dockerfile: Dockerfile.atom
   container_name: atom
 
-  mem_limit: 1000000000
+  mem_limit: 2000000000
   privileged: true
   environment:
     - DISPLAY=unix:0
@@ -53,6 +53,7 @@ atom:
 #you will need to chmod ./jenkins_data or run the container as privileged
   ports:
    - "3000:3000"
+   - "8666:8666"
 
 jenkins:
   image: jenkins:latest
