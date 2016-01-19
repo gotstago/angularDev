@@ -1,25 +1,32 @@
 import {Component} from 'angular2/core';
 import {HeroDetailComponent} from './hero-detail.component';
+import {HeroListComponent} from './hero-list.component';
+import {DeckManagerComponent} from './deck-manager.component';
 import {HeroService} from './hero.service';
 import {OnInit} from 'angular2/core';
+import {Hero} from './hero';
+//import {Injectable} from 'angular2/angular2';
 
-interface Hero {
-  id: number;
-  name: string;
-}
+// interface Hero {
+//   id: number;
+//   name: string;
+// }
+
 @Component({
   selector: 'my-app',
   template:`
     <h1>{{title}}</h1>
-    <h2>My Heroes</h2>
-    <ul class="heroes">
+    <h2>My awesomest Heroes</h2>
+    <!--<ul class="heroes">
       <li *ngFor="#hero of heroes"
         [class.selected]="hero === selectedHero"
         (click)="onSelect(hero)">
         <span class="badge">{{hero.id}}</span> {{hero.name}}
       </li>
-    </ul>
+    </ul>-->
+    <my-hero-list (click)="onSelect($event)" [heroes]="heroes"></my-hero-list>
     <my-hero-detail [hero]="selectedHero"></my-hero-detail>
+    <!--<data-co-deck-manager [hero]="selectedHero"></data-co-deck-manager>-->
   `,
   styles:[`
     .selected {
@@ -69,7 +76,7 @@ interface Hero {
       border-radius: 4px 0px 0px 4px;
     }
   `],
-  directives: [HeroDetailComponent],
+  directives: [HeroDetailComponent, DeckManagerComponent,HeroListComponent],
   providers: [HeroService]
 })
 export class AppComponent implements OnInit{
@@ -77,7 +84,9 @@ export class AppComponent implements OnInit{
   public title = 'Tour of Heroes';
   public heroes: Hero[];
   public selectedHero: Hero;
-  onSelect(hero: Hero) { this.selectedHero = hero; }
+  onSelect(hero: Hero) { 
+    console.log(hero.target);
+    this.selectedHero = hero.target; }
   getHeroes() {
     //this.heroes = this._heroService.getHeroes();
     this._heroService.getHeroes().then(heroes => this.heroes = heroes);
